@@ -31,20 +31,27 @@ class _TodoScreenState extends State<TodoScreen> {
   }
 
   void onAddTodoButtonPressed() async {
-    TodoItem newTodo = TodoItem(
-      content: textFieldController.text,
-      isDone: false,
-    );
     
-    TodosProvider todosProvider = Provider.of<TodosProvider>(
-      context,
-      listen: false,
-    );
-
-    todosProvider.addTodo(newTodo);
-    textFieldController.clear();
+    // only execute when the input is not empty
+    if(textFieldController.text.length > 0) {
+      // initialize a todoitem object with the input
+      TodoItem newTodo = TodoItem(
+        content: textFieldController.text,
+        isDone: false,
+      );
+      // initialize the provider
+      TodosProvider todosProvider = Provider.of<TodosProvider>(
+        context,
+        listen: false,
+      );
+      // calls the addtodo function from the provider to add into API
+      todosProvider.addTodo(newTodo);
+      // clear the text field
+      textFieldController.clear();
+    }
   }
 
+  // these functions can't be used in other files for some reasons
   // void onDeleteButtonPressed(int id) {
   //   // TodosProvider todosProvider = Provider.of<TodosProvider>(
   //   //   context,
@@ -56,13 +63,10 @@ class _TodoScreenState extends State<TodoScreen> {
 
   // void onUpdateStatusButtonPressed(int id) async {
   //   TodosProvider todosProvider = Provider.of<TodosProvider>(
-  //     context,
-  //     listen: false,
-  //   );
+  //       context,
+  //       listen: false,
+  //     );
   //   todosProvider.updateTodo(id);
-  //   // setState(() {
-  //   //   todoItem.isDone = true;
-  //   // });
   // }
 
   @override

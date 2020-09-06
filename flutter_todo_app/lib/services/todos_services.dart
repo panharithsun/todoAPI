@@ -41,22 +41,27 @@ class TodoServices {
     print('adding...');
     
     if (response.statusCode == 201) {
-      print('added successfully');
       print(response.body);
+      print('added successfully');
     }
   }
 
   removeTodo(int id) async {
-    // initialize the url to a string variable
+    // initialize the url to a string variable with id
     String url = "https://fathomless-inlet-42914.herokuapp.com/api/delete/$id";
     // intialize the headers to a map with key of "content-type" and value of "applicaiton/json"
     Map<String, String> headers = {"Content-Type": "application/json",};
-
+    // call http.delete to delete the todoitem at the id specified
     http.Response response = await http.delete(url, headers: headers);
 
+    // print to see if its working
     print('deleting...');
-    print(response.statusCode);
-    print(response.body);
+    
+    if (response.statusCode == 200) {
+      print(response.body);
+      print('deleted successfully');
+    }
+
   }
 
   updateStatus(int id) async {
@@ -71,12 +76,15 @@ class TodoServices {
         "status": "true"
       },
     });
-
+    // call the http.patch to update the api
     http.Response response = await http.patch(url, headers: headers, body: bodyData);
-
+    // print to see if its working
     print('updating...');
-    print(response.statusCode);
-    print(response.body);
+    
+    if(response.statusCode == 200) {
+      print(response.body);
+      print('updated successfully');
+    }
     
   }
 

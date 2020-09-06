@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider_demo/models/todo_item.dart';
 import 'package:provider_demo/providers/todos_provider.dart';
 
-class TodoItemCard extends StatelessWidget {
+class TodoItemCard extends StatefulWidget {
   const TodoItemCard({
     Key key, 
     @required this.todoItem,
@@ -17,6 +17,11 @@ class TodoItemCard extends StatelessWidget {
   final TodoItem todoItem;
 
   @override
+  _TodoItemCardState createState() => _TodoItemCardState();
+}
+
+class _TodoItemCardState extends State<TodoItemCard> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -25,24 +30,21 @@ class TodoItemCard extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  TodosProvider todosProvider = TodosProvider();
-                  todosProvider.updateTodo(todoItem.id);
-                },
-                child: Container(
-                  margin: EdgeInsets.only(right: 20.0),
-                  height: 25.0,
-                  width: 25.0,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blue, width: 2),
-                    borderRadius: BorderRadius.circular(5.0)
-                  ),
-                  child: (todoItem.isDone) ? Icon(Icons.check) : null,
+              Container(
+                padding: EdgeInsets.all(5.0),
+                child: Checkbox(
+                  value: widget.todoItem.isDone,
+                  onChanged: (newValue) {
+                    setState(() {
+                      widget.todoItem.isDone = newValue;
+                      TodosProvider todosProvider = TodosProvider();
+                      todosProvider.updateTodo(widget.todoItem.id);
+                    });
+                  },
                 ),
               ),
               Text(
-                todoItem.content,
+                widget.todoItem.content,
                 style: TextStyle(
                   fontSize: 20.0,
                 ),
@@ -52,7 +54,10 @@ class TodoItemCard extends StatelessWidget {
           IconButton(
             onPressed: () {
               TodosProvider todosProvider = TodosProvider();
-              todosProvider.removeTodo(todoItem.id);
+              todosProvider.removeTodo(widget.todoItem.id);
+              setState(() {
+                
+              });
             },
             icon: Icon(Icons.delete),
           )
