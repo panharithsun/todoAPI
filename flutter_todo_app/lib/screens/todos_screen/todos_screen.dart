@@ -15,13 +15,10 @@ class _TodoScreenState extends State<TodoScreen> {
   @override
   void initState() {
     super.initState();
-
     // when the screen first renders
     // we fetch the list of todos
-
     TodosProvider todosProvider =
         Provider.of<TodosProvider>(context, listen: false);
-
     try {
       // run the fetchTodos function
       todosProvider.fetchTodos();
@@ -33,19 +30,40 @@ class _TodoScreenState extends State<TodoScreen> {
     }
   }
 
-  void onAddTodoButtonPressed() {
+  void onAddTodoButtonPressed() async {
     TodoItem newTodo = TodoItem(
       content: textFieldController.text,
       isDone: false,
     );
-
+    
     TodosProvider todosProvider = Provider.of<TodosProvider>(
       context,
       listen: false,
     );
 
     todosProvider.addTodo(newTodo);
+    textFieldController.clear();
   }
+
+  // void onDeleteButtonPressed(int id) {
+  //   // TodosProvider todosProvider = Provider.of<TodosProvider>(
+  //   //   context,
+  //   //   listen: false,
+  //   // );
+  //   // todosProvider.removeTodo(id);
+  //   print('doggos');
+  // }
+
+  // void onUpdateStatusButtonPressed(int id) async {
+  //   TodosProvider todosProvider = Provider.of<TodosProvider>(
+  //     context,
+  //     listen: false,
+  //   );
+  //   todosProvider.updateTodo(id);
+  //   // setState(() {
+  //   //   todoItem.isDone = true;
+  //   // });
+  // }
 
   @override
   Widget build(BuildContext context) {
