@@ -45,15 +45,10 @@ class _TodoScreenState extends State<TodoScreen> {
     }
   }
 
-  // these functions can't be used in other files for some reasons
-  // void onDeleteButtonPressed(int id) {
-  //   // TodosProvider todosProvider = Provider.of<TodosProvider>(
-  //   //   context,
-  //   //   listen: false,
-  //   // );
-  //   // todosProvider.removeTodo(id);
-  //   print('doggos');
-  // }
+  void onDeleteButtonPressed(int id) async {
+    TodosProvider todosProvider = Provider.of<TodosProvider>(context, listen: false);
+    todosProvider.removeTodo(id);
+  }
 
   // void onUpdateStatusButtonPressed(int id) async {
   //   TodosProvider todosProvider = Provider.of<TodosProvider>(
@@ -75,6 +70,7 @@ class _TodoScreenState extends State<TodoScreen> {
           todos: todosProvider.todos,
           textFieldController: textFieldController,
           onAddTodoButtonPressed: onAddTodoButtonPressed,
+          onDeleteButtonPressed: onDeleteButtonPressed,
         );
       },
     );

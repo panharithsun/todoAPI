@@ -36,37 +36,38 @@ class TodoServices {
       "todo": bodyMap,
     });
     // call http.post with the params set above
-    http.Response response = await http.post(url, headers: headers, body: bodyData);
+    http.Response response =
+        await http.post(url, headers: headers, body: bodyData);
     // print just to see if its working
     print('adding...');
-    
+
     if (response.statusCode == 201) {
       print(response.body);
-      print('added successfully');        
+      print('added successfully');
 
       Map<String, dynamic> parsed = json.decode(response.body);
-    
-      return parsed["data"]["id"];
 
-    } 
+      return parsed["data"]["id"];
+    }
   }
 
   removeTodo(int id) async {
     // initialize the url to a string variable with id
     String url = "https://fathomless-inlet-42914.herokuapp.com/api/delete/$id";
     // intialize the headers to a map with key of "content-type" and value of "applicaiton/json"
-    Map<String, String> headers = {"Content-Type": "application/json",};
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+    };
     // call http.delete to delete the todoitem at the id specified
     http.Response response = await http.delete(url, headers: headers);
 
     // print to see if its working
     print('deleting...');
-    
+
     if (response.statusCode == 200) {
       print(response.body);
       print('deleted successfully');
     }
-
   }
 
   updateStatus(int id, bool newValue) async {
@@ -77,20 +78,17 @@ class TodoServices {
     // encode the id and status into json taking the same structure as in insomnia (jes te dak te lol)
     var bodyData = json.encode({
       "id": id,
-      "updated": {
-        "status": newValue
-      },
+      "updated": {"status": newValue},
     });
     // call the http.patch to update the api
-    http.Response response = await http.patch(url, headers: headers, body: bodyData);
+    http.Response response =
+        await http.patch(url, headers: headers, body: bodyData);
     // print to see if its working
     print('updating...');
-    
-    if(response.statusCode == 200) {
+
+    if (response.statusCode == 200) {
       print(response.body);
       print('updated successfully');
     }
-    
   }
-
 }

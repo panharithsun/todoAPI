@@ -29,7 +29,9 @@ class TodosProvider extends ChangeNotifier {
     // create a new todoitem
     TodoItem todoItem = TodoItem(content: text, id: id, isDone: false);
     // add todoitem to the list
+    print(this._todos.length);
     _todos.add(todoItem);
+    print(this._todos.length);
 
     print(todoItem.id);
 
@@ -41,10 +43,11 @@ class TodosProvider extends ChangeNotifier {
     TodoServices todoServices = TodoServices();
     // run the updateStatus function in TodoServices class to update the todo status into the api
     todoServices.removeTodo(id);
+    // initialize the list to consist only of item that we didnt delete
     this._todos = this._todos.where((TodoItem element) {
       return element.id != id;
     }).toList();
-    print(_todos);
+    
     notifyListeners();
   }
 
