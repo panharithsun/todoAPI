@@ -24,7 +24,7 @@ class TodoServices {
     return todos;
   }
 
-  addTodo(String title) async {
+  Future<int> addTodo(String title) async {
     // initialize the url to a string variable
     String url = "https://fathomless-inlet-42914.herokuapp.com/api/new";
     // intialize the headers to a map with key of "content-type" and value of "applicaiton/json"
@@ -42,8 +42,13 @@ class TodoServices {
     
     if (response.statusCode == 201) {
       print(response.body);
-      print('added successfully');
-    }
+      print('added successfully');        
+
+      Map<String, dynamic> parsed = json.decode(response.body);
+    
+      return parsed["data"]["id"];
+
+    } 
   }
 
   removeTodo(int id) async {
@@ -64,7 +69,7 @@ class TodoServices {
 
   }
 
-  updateStatus(int id) async {
+  updateStatus(int id, bool newValue) async {
     // initialize the url to a string variable
     String url = "https://fathomless-inlet-42914.herokuapp.com/api/update";
     // intialize the headers to a map with key of "content-type" and value of "applicaiton/json"
@@ -73,7 +78,7 @@ class TodoServices {
     var bodyData = json.encode({
       "id": id,
       "updated": {
-        "status": "true"
+        "status": newValue
       },
     });
     // call the http.patch to update the api

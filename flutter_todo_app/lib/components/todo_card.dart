@@ -38,7 +38,7 @@ class _TodoItemCardState extends State<TodoItemCard> {
                     setState(() {
                       widget.todoItem.isDone = newValue;
                       TodosProvider todosProvider = TodosProvider();
-                      todosProvider.updateTodo(widget.todoItem.id);
+                      todosProvider.updateTodo(widget.todoItem.id, newValue);
                     });
                   },
                 ),
@@ -55,9 +55,7 @@ class _TodoItemCardState extends State<TodoItemCard> {
             onPressed: () {
               TodosProvider todosProvider = TodosProvider();
               todosProvider.removeTodo(widget.todoItem.id);
-              setState(() {
-                
-              });
+              setState(() {});
             },
             icon: Icon(Icons.delete),
           )

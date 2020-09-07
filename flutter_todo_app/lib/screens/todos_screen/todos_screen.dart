@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_demo/models/todo_item.dart';
 import 'package:provider_demo/providers/todos_provider.dart';
 import 'package:provider_demo/screens/todos_screen/todo_ui.dart';
 
@@ -34,18 +33,13 @@ class _TodoScreenState extends State<TodoScreen> {
     
     // only execute when the input is not empty
     if(textFieldController.text.length > 0) {
-      // initialize a todoitem object with the input
-      TodoItem newTodo = TodoItem(
-        content: textFieldController.text,
-        isDone: false,
-      );
       // initialize the provider
       TodosProvider todosProvider = Provider.of<TodosProvider>(
         context,
         listen: false,
       );
       // calls the addtodo function from the provider to add into API
-      todosProvider.addTodo(newTodo);
+      todosProvider.addTodo(textFieldController.text);
       // clear the text field
       textFieldController.clear();
     }
